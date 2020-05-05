@@ -1,0 +1,63 @@
+﻿@model IEnumerable<ExamenModelos.Models.Mercados>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaCracion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Estado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Finalizado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cancelado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Creado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Propietarios.Nombre)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.FechaCracion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Estado)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Finalizado)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cancelado)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Creado)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Propietarios.Nombre)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IdMercado }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IdMercado }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IdMercado })
+        </td>
+    </tr>
+}
+
+</table>

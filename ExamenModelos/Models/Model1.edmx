@@ -1,0 +1,609 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Daniela93Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Apartamentos">
+          <Key>
+            <PropertyRef Name="IdApartamento" />
+          </Key>
+          <Property Name="IdApartamento" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NumeroApart" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Piso" Type="int" />
+          <Property Name="Bloque" Type="int" />
+          <Property Name="Unidad" Type="int" />
+          <Property Name="Estado" Type="bit" />
+        </EntityType>
+        <EntityType Name="Ciudades">
+          <Key>
+            <PropertyRef Name="IdCiudad" />
+          </Key>
+          <Property Name="IdCiudad" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+          <Property Name="IdDepartamentos" Type="int" />
+          <Property Name="Estado" Type="bit" />
+        </EntityType>
+        <EntityType Name="Compras">
+          <Key>
+            <PropertyRef Name="IDCompra" />
+          </Key>
+          <Property Name="IDCompra" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDMercado" Type="int" />
+          <Property Name="IdProducto" Type="int" />
+          <Property Name="Cantidad" Type="int" />
+        </EntityType>
+        <EntityType Name="Departamentos">
+          <Key>
+            <PropertyRef Name="IdDepartamento" />
+          </Key>
+          <Property Name="IdDepartamento" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+          <Property Name="IdPais" Type="int" />
+          <Property Name="Estado" Type="bit" />
+        </EntityType>
+        <EntityType Name="Mercados">
+          <Key>
+            <PropertyRef Name="IdMercado" />
+          </Key>
+          <Property Name="IdMercado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FechaCracion" Type="datetime" />
+          <Property Name="IdPropietario" Type="int" />
+          <Property Name="Estado" Type="bit" />
+          <Property Name="Finalizado" Type="bit" />
+          <Property Name="Cancelado" Type="bit" />
+          <Property Name="Creado" Type="bit" />
+        </EntityType>
+        <EntityType Name="Paises">
+          <Key>
+            <PropertyRef Name="PaisID" />
+          </Key>
+          <Property Name="PaisID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+          <Property Name="Estado" Type="bit" />
+        </EntityType>
+        <EntityType Name="Productos">
+          <Key>
+            <PropertyRef Name="IDProducto" />
+          </Key>
+          <Property Name="IDProducto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+          <Property Name="U-Medidad" Type="varchar" MaxLength="50" />
+          <Property Name="Estado" Type="bit" />
+        </EntityType>
+        <EntityType Name="Propietarios">
+          <Key>
+            <PropertyRef Name="IdPropietario" />
+          </Key>
+          <Property Name="IdPropietario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+          <Property Name="Apellidos" Type="varchar" MaxLength="50" />
+          <Property Name="Telefono" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="IDAparatamento" Type="int" />
+        </EntityType>
+        <EntityType Name="Unidad recidencial">
+          <Key>
+            <PropertyRef Name="IdUnidad" />
+          </Key>
+          <Property Name="IdUnidad" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+          <Property Name="Direccion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Telefono" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="IDCiudad" Type="int" />
+          <Property Name="Estado" Type="bit" />
+        </EntityType>
+        <Association Name="FK_Apartamentos_Unidad recidencial">
+          <End Role="Unidad recidencial" Type="Self.Unidad recidencial" Multiplicity="0..1" />
+          <End Role="Apartamentos" Type="Self.Apartamentos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unidad recidencial">
+              <PropertyRef Name="IdUnidad" />
+            </Principal>
+            <Dependent Role="Apartamentos">
+              <PropertyRef Name="Unidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ciudades_Departamentos">
+          <End Role="Departamentos" Type="Self.Departamentos" Multiplicity="0..1" />
+          <End Role="Ciudades" Type="Self.Ciudades" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departamentos">
+              <PropertyRef Name="IdDepartamento" />
+            </Principal>
+            <Dependent Role="Ciudades">
+              <PropertyRef Name="IdDepartamentos" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Compras_Productos">
+          <End Role="Mercados" Type="Self.Mercados" Multiplicity="0..1" />
+          <End Role="Compras" Type="Self.Compras" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mercados">
+              <PropertyRef Name="IdMercado" />
+            </Principal>
+            <Dependent Role="Compras">
+              <PropertyRef Name="IDMercado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Compras_Productos1">
+          <End Role="Productos" Type="Self.Productos" Multiplicity="0..1" />
+          <End Role="Compras" Type="Self.Compras" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Productos">
+              <PropertyRef Name="IDProducto" />
+            </Principal>
+            <Dependent Role="Compras">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Departamentos_Paises">
+          <End Role="Paises" Type="Self.Paises" Multiplicity="0..1" />
+          <End Role="Departamentos" Type="Self.Departamentos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Paises">
+              <PropertyRef Name="PaisID" />
+            </Principal>
+            <Dependent Role="Departamentos">
+              <PropertyRef Name="IdPais" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Mercados_Propietarios">
+          <End Role="Propietarios" Type="Self.Propietarios" Multiplicity="0..1" />
+          <End Role="Mercados" Type="Self.Mercados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Propietarios">
+              <PropertyRef Name="IdPropietario" />
+            </Principal>
+            <Dependent Role="Mercados">
+              <PropertyRef Name="IdPropietario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Propietarios_Apartamentos">
+          <End Role="Apartamentos" Type="Self.Apartamentos" Multiplicity="0..1" />
+          <End Role="Propietarios" Type="Self.Propietarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Apartamentos">
+              <PropertyRef Name="IdApartamento" />
+            </Principal>
+            <Dependent Role="Propietarios">
+              <PropertyRef Name="IDAparatamento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Unidad recidencial_Ciudades">
+          <End Role="Ciudades" Type="Self.Ciudades" Multiplicity="0..1" />
+          <End Role="Unidad recidencial" Type="Self.Unidad recidencial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ciudades">
+              <PropertyRef Name="IdCiudad" />
+            </Principal>
+            <Dependent Role="Unidad recidencial">
+              <PropertyRef Name="IDCiudad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Daniela93ModelStoreContainer">
+          <EntitySet Name="Apartamentos" EntityType="Self.Apartamentos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ciudades" EntityType="Self.Ciudades" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Compras" EntityType="Self.Compras" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Departamentos" EntityType="Self.Departamentos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mercados" EntityType="Self.Mercados" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Paises" EntityType="Self.Paises" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Productos" EntityType="Self.Productos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Propietarios" EntityType="Self.Propietarios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Unidad recidencial" EntityType="Self.Unidad recidencial" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Apartamentos_Unidad recidencial" Association="Self.FK_Apartamentos_Unidad recidencial">
+            <End Role="Unidad recidencial" EntitySet="Unidad recidencial" />
+            <End Role="Apartamentos" EntitySet="Apartamentos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ciudades_Departamentos" Association="Self.FK_Ciudades_Departamentos">
+            <End Role="Departamentos" EntitySet="Departamentos" />
+            <End Role="Ciudades" EntitySet="Ciudades" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Compras_Productos" Association="Self.FK_Compras_Productos">
+            <End Role="Mercados" EntitySet="Mercados" />
+            <End Role="Compras" EntitySet="Compras" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Compras_Productos1" Association="Self.FK_Compras_Productos1">
+            <End Role="Productos" EntitySet="Productos" />
+            <End Role="Compras" EntitySet="Compras" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Departamentos_Paises" Association="Self.FK_Departamentos_Paises">
+            <End Role="Paises" EntitySet="Paises" />
+            <End Role="Departamentos" EntitySet="Departamentos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Mercados_Propietarios" Association="Self.FK_Mercados_Propietarios">
+            <End Role="Propietarios" EntitySet="Propietarios" />
+            <End Role="Mercados" EntitySet="Mercados" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Propietarios_Apartamentos" Association="Self.FK_Propietarios_Apartamentos">
+            <End Role="Apartamentos" EntitySet="Apartamentos" />
+            <End Role="Propietarios" EntitySet="Propietarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Unidad recidencial_Ciudades" Association="Self.FK_Unidad recidencial_Ciudades">
+            <End Role="Ciudades" EntitySet="Ciudades" />
+            <End Role="Unidad recidencial" EntitySet="Unidad recidencial" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Daniela93Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Apartamentos">
+          <Key>
+            <PropertyRef Name="IdApartamento" />
+          </Key>
+          <Property Name="IdApartamento" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NumeroApart" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Piso" Type="Int32" />
+          <Property Name="Bloque" Type="Int32" />
+          <Property Name="Unidad" Type="Int32" />
+          <Property Name="Estado" Type="Boolean" />
+          <NavigationProperty Name="Unidad_recidencial" Relationship="Self.FK_Apartamentos_Unidad_recidencial" FromRole="Apartamentos" ToRole="Unidad_recidencial" />
+          <NavigationProperty Name="Propietarios" Relationship="Self.FK_Propietarios_Apartamentos" FromRole="Apartamentos" ToRole="Propietarios" />
+        </EntityType>
+        <EntityType Name="Ciudades">
+          <Key>
+            <PropertyRef Name="IdCiudad" />
+          </Key>
+          <Property Name="IdCiudad" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdDepartamentos" Type="Int32" />
+          <Property Name="Estado" Type="Boolean" />
+          <NavigationProperty Name="Departamentos" Relationship="Self.FK_Ciudades_Departamentos" FromRole="Ciudades" ToRole="Departamentos" />
+          <NavigationProperty Name="Unidad_recidencial" Relationship="Self.FK_Unidad_recidencial_Ciudades" FromRole="Ciudades" ToRole="Unidad_recidencial" />
+        </EntityType>
+        <EntityType Name="Compras">
+          <Key>
+            <PropertyRef Name="IDCompra" />
+          </Key>
+          <Property Name="IDCompra" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDMercado" Type="Int32" />
+          <Property Name="IdProducto" Type="Int32" />
+          <Property Name="Cantidad" Type="Int32" />
+          <NavigationProperty Name="Mercados" Relationship="Self.FK_Compras_Productos" FromRole="Compras" ToRole="Mercados" />
+          <NavigationProperty Name="Productos" Relationship="Self.FK_Compras_Productos1" FromRole="Compras" ToRole="Productos" />
+        </EntityType>
+        <EntityType Name="Departamentos">
+          <Key>
+            <PropertyRef Name="IdDepartamento" />
+          </Key>
+          <Property Name="IdDepartamento" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdPais" Type="Int32" />
+          <Property Name="Estado" Type="Boolean" />
+          <NavigationProperty Name="Ciudades" Relationship="Self.FK_Ciudades_Departamentos" FromRole="Departamentos" ToRole="Ciudades" />
+          <NavigationProperty Name="Paises" Relationship="Self.FK_Departamentos_Paises" FromRole="Departamentos" ToRole="Paises" />
+        </EntityType>
+        <EntityType Name="Mercados">
+          <Key>
+            <PropertyRef Name="IdMercado" />
+          </Key>
+          <Property Name="IdMercado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FechaCracion" Type="DateTime" Precision="3" />
+          <Property Name="IdPropietario" Type="Int32" />
+          <Property Name="Estado" Type="Boolean" />
+          <Property Name="Finalizado" Type="Boolean" />
+          <Property Name="Cancelado" Type="Boolean" />
+          <Property Name="Creado" Type="Boolean" />
+          <NavigationProperty Name="Compras" Relationship="Self.FK_Compras_Productos" FromRole="Mercados" ToRole="Compras" />
+          <NavigationProperty Name="Propietarios" Relationship="Self.FK_Mercados_Propietarios" FromRole="Mercados" ToRole="Propietarios" />
+        </EntityType>
+        <EntityType Name="Paises">
+          <Key>
+            <PropertyRef Name="PaisID" />
+          </Key>
+          <Property Name="PaisID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="Boolean" />
+          <NavigationProperty Name="Departamentos" Relationship="Self.FK_Departamentos_Paises" FromRole="Paises" ToRole="Departamentos" />
+        </EntityType>
+        <EntityType Name="Productos">
+          <Key>
+            <PropertyRef Name="IDProducto" />
+          </Key>
+          <Property Name="IDProducto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="U_Medidad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="Boolean" />
+          <NavigationProperty Name="Compras" Relationship="Self.FK_Compras_Productos1" FromRole="Productos" ToRole="Compras" />
+        </EntityType>
+        <EntityType Name="Propietarios">
+          <Key>
+            <PropertyRef Name="IdPropietario" />
+          </Key>
+          <Property Name="IdPropietario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Apellidos" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Telefono" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="IDAparatamento" Type="Int32" />
+          <NavigationProperty Name="Apartamentos" Relationship="Self.FK_Propietarios_Apartamentos" FromRole="Propietarios" ToRole="Apartamentos" />
+          <NavigationProperty Name="Mercados" Relationship="Self.FK_Mercados_Propietarios" FromRole="Propietarios" ToRole="Mercados" />
+        </EntityType>
+        <EntityType Name="Unidad_recidencial">
+          <Key>
+            <PropertyRef Name="IdUnidad" />
+          </Key>
+          <Property Name="IdUnidad" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Direccion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Telefono" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="IDCiudad" Type="Int32" />
+          <Property Name="Estado" Type="Boolean" />
+          <NavigationProperty Name="Apartamentos" Relationship="Self.FK_Apartamentos_Unidad_recidencial" FromRole="Unidad_recidencial" ToRole="Apartamentos" />
+          <NavigationProperty Name="Ciudades" Relationship="Self.FK_Unidad_recidencial_Ciudades" FromRole="Unidad_recidencial" ToRole="Ciudades" />
+        </EntityType>
+        <Association Name="FK_Apartamentos_Unidad_recidencial">
+          <End Role="Unidad_recidencial" Type="Self.Unidad_recidencial" Multiplicity="0..1" />
+          <End Role="Apartamentos" Type="Self.Apartamentos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unidad_recidencial">
+              <PropertyRef Name="IdUnidad" />
+            </Principal>
+            <Dependent Role="Apartamentos">
+              <PropertyRef Name="Unidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Propietarios_Apartamentos">
+          <End Role="Apartamentos" Type="Self.Apartamentos" Multiplicity="0..1" />
+          <End Role="Propietarios" Type="Self.Propietarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Apartamentos">
+              <PropertyRef Name="IdApartamento" />
+            </Principal>
+            <Dependent Role="Propietarios">
+              <PropertyRef Name="IDAparatamento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ciudades_Departamentos">
+          <End Role="Departamentos" Type="Self.Departamentos" Multiplicity="0..1" />
+          <End Role="Ciudades" Type="Self.Ciudades" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departamentos">
+              <PropertyRef Name="IdDepartamento" />
+            </Principal>
+            <Dependent Role="Ciudades">
+              <PropertyRef Name="IdDepartamentos" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Unidad_recidencial_Ciudades">
+          <End Role="Ciudades" Type="Self.Ciudades" Multiplicity="0..1" />
+          <End Role="Unidad_recidencial" Type="Self.Unidad_recidencial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ciudades">
+              <PropertyRef Name="IdCiudad" />
+            </Principal>
+            <Dependent Role="Unidad_recidencial">
+              <PropertyRef Name="IDCiudad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Compras_Productos">
+          <End Role="Mercados" Type="Self.Mercados" Multiplicity="0..1" />
+          <End Role="Compras" Type="Self.Compras" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mercados">
+              <PropertyRef Name="IdMercado" />
+            </Principal>
+            <Dependent Role="Compras">
+              <PropertyRef Name="IDMercado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Compras_Productos1">
+          <End Role="Productos" Type="Self.Productos" Multiplicity="0..1" />
+          <End Role="Compras" Type="Self.Compras" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Productos">
+              <PropertyRef Name="IDProducto" />
+            </Principal>
+            <Dependent Role="Compras">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Departamentos_Paises">
+          <End Role="Paises" Type="Self.Paises" Multiplicity="0..1" />
+          <End Role="Departamentos" Type="Self.Departamentos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Paises">
+              <PropertyRef Name="PaisID" />
+            </Principal>
+            <Dependent Role="Departamentos">
+              <PropertyRef Name="IdPais" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Mercados_Propietarios">
+          <End Role="Propietarios" Type="Self.Propietarios" Multiplicity="0..1" />
+          <End Role="Mercados" Type="Self.Mercados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Propietarios">
+              <PropertyRef Name="IdPropietario" />
+            </Principal>
+            <Dependent Role="Mercados">
+              <PropertyRef Name="IdPropietario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DanielaEntitiesExam" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Apartamentos" EntityType="Self.Apartamentos" />
+          <EntitySet Name="Ciudades" EntityType="Self.Ciudades" />
+          <EntitySet Name="Compras" EntityType="Self.Compras" />
+          <EntitySet Name="Departamentos" EntityType="Self.Departamentos" />
+          <EntitySet Name="Mercados" EntityType="Self.Mercados" />
+          <EntitySet Name="Paises" EntityType="Self.Paises" />
+          <EntitySet Name="Productos" EntityType="Self.Productos" />
+          <EntitySet Name="Propietarios" EntityType="Self.Propietarios" />
+          <EntitySet Name="Unidad_recidencial" EntityType="Self.Unidad_recidencial" />
+          <AssociationSet Name="FK_Apartamentos_Unidad_recidencial" Association="Self.FK_Apartamentos_Unidad_recidencial">
+            <End Role="Unidad_recidencial" EntitySet="Unidad_recidencial" />
+            <End Role="Apartamentos" EntitySet="Apartamentos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Propietarios_Apartamentos" Association="Self.FK_Propietarios_Apartamentos">
+            <End Role="Apartamentos" EntitySet="Apartamentos" />
+            <End Role="Propietarios" EntitySet="Propietarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ciudades_Departamentos" Association="Self.FK_Ciudades_Departamentos">
+            <End Role="Departamentos" EntitySet="Departamentos" />
+            <End Role="Ciudades" EntitySet="Ciudades" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Unidad_recidencial_Ciudades" Association="Self.FK_Unidad_recidencial_Ciudades">
+            <End Role="Ciudades" EntitySet="Ciudades" />
+            <End Role="Unidad_recidencial" EntitySet="Unidad_recidencial" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Compras_Productos" Association="Self.FK_Compras_Productos">
+            <End Role="Mercados" EntitySet="Mercados" />
+            <End Role="Compras" EntitySet="Compras" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Compras_Productos1" Association="Self.FK_Compras_Productos1">
+            <End Role="Productos" EntitySet="Productos" />
+            <End Role="Compras" EntitySet="Compras" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Departamentos_Paises" Association="Self.FK_Departamentos_Paises">
+            <End Role="Paises" EntitySet="Paises" />
+            <End Role="Departamentos" EntitySet="Departamentos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Mercados_Propietarios" Association="Self.FK_Mercados_Propietarios">
+            <End Role="Propietarios" EntitySet="Propietarios" />
+            <End Role="Mercados" EntitySet="Mercados" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Daniela93ModelStoreContainer" CdmEntityContainer="DanielaEntitiesExam">
+          <EntitySetMapping Name="Apartamentos">
+            <EntityTypeMapping TypeName="Daniela93Model.Apartamentos">
+              <MappingFragment StoreEntitySet="Apartamentos">
+                <ScalarProperty Name="IdApartamento" ColumnName="IdApartamento" />
+                <ScalarProperty Name="NumeroApart" ColumnName="NumeroApart" />
+                <ScalarProperty Name="Piso" ColumnName="Piso" />
+                <ScalarProperty Name="Bloque" ColumnName="Bloque" />
+                <ScalarProperty Name="Unidad" ColumnName="Unidad" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ciudades">
+            <EntityTypeMapping TypeName="Daniela93Model.Ciudades">
+              <MappingFragment StoreEntitySet="Ciudades">
+                <ScalarProperty Name="IdCiudad" ColumnName="IdCiudad" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdDepartamentos" ColumnName="IdDepartamentos" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Compras">
+            <EntityTypeMapping TypeName="Daniela93Model.Compras">
+              <MappingFragment StoreEntitySet="Compras">
+                <ScalarProperty Name="IDCompra" ColumnName="IDCompra" />
+                <ScalarProperty Name="IDMercado" ColumnName="IDMercado" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Departamentos">
+            <EntityTypeMapping TypeName="Daniela93Model.Departamentos">
+              <MappingFragment StoreEntitySet="Departamentos">
+                <ScalarProperty Name="IdDepartamento" ColumnName="IdDepartamento" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdPais" ColumnName="IdPais" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mercados">
+            <EntityTypeMapping TypeName="Daniela93Model.Mercados">
+              <MappingFragment StoreEntitySet="Mercados">
+                <ScalarProperty Name="IdMercado" ColumnName="IdMercado" />
+                <ScalarProperty Name="FechaCracion" ColumnName="FechaCracion" />
+                <ScalarProperty Name="IdPropietario" ColumnName="IdPropietario" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Finalizado" ColumnName="Finalizado" />
+                <ScalarProperty Name="Cancelado" ColumnName="Cancelado" />
+                <ScalarProperty Name="Creado" ColumnName="Creado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Paises">
+            <EntityTypeMapping TypeName="Daniela93Model.Paises">
+              <MappingFragment StoreEntitySet="Paises">
+                <ScalarProperty Name="PaisID" ColumnName="PaisID" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Productos">
+            <EntityTypeMapping TypeName="Daniela93Model.Productos">
+              <MappingFragment StoreEntitySet="Productos">
+                <ScalarProperty Name="IDProducto" ColumnName="IDProducto" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="U_Medidad" ColumnName="U-Medidad" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Propietarios">
+            <EntityTypeMapping TypeName="Daniela93Model.Propietarios">
+              <MappingFragment StoreEntitySet="Propietarios">
+                <ScalarProperty Name="IdPropietario" ColumnName="IdPropietario" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="IDAparatamento" ColumnName="IDAparatamento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Unidad_recidencial">
+            <EntityTypeMapping TypeName="Daniela93Model.Unidad_recidencial">
+              <MappingFragment StoreEntitySet="Unidad recidencial">
+                <ScalarProperty Name="IdUnidad" ColumnName="IdUnidad" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="IDCiudad" ColumnName="IDCiudad" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
